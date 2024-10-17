@@ -3,16 +3,14 @@ let secondCard
 let sum
 let cards = []
 let hasBlackJack
-let isAlive
-let message = ""
 let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("card-el")
+let blackJackCounter = 0
+let bJ = document.createElement("h3")
 
-if (sum < 21) message = "Do you want to draw a new card? 🙂"
-if (sum == 21) message = "Wohoo! You've got Blackjack! 🥳"
-if (sum > 21) message = "You're out of the game! 😭"
-console.log(message) 
+bJ.innerText = "BlackJack Counter: " + blackJackCounter
+document.body.appendChild(bJ)
 
 function renderGame()
 {
@@ -23,7 +21,7 @@ function renderGame()
 
     for (let i = 0; i < cards.length; i++) cardsEl.innerText += " " + cards[i]
 
-    if (sum < 21 && isAlive) messageEl.innerText = "Do you want to draw a new card? 🙂"
+    if (sum < 21) messageEl.innerText = "Do you want to draw a new card? 🙂"
     else if (hasBlackJack) messageEl.innerText = "Wohoo! You've got Blackjack! 🥳"
     else messageEl.innerText = "You're out of the game! 😭"
 }
@@ -43,7 +41,6 @@ function startGame()
     while (cards[0] != null) cards.pop()
 
     hasBlackJack = false
-    isAlive = true
     firstCard = getRandomCard()
     secondCard = getRandomCard()
     sum = getSum()
@@ -56,7 +53,12 @@ function getSum()
     x = 0
 
     for (let i = 0; i < cards.length; i++) x += cards[i]
-    if (x == 21) hasBlackJack = true
+    if (x == 21) 
+    {
+        hasBlackJack = true
+        blackJackCounter++
+        bJ.innerText = "BlackJack Counter: " + blackJackCounter
+    }
 
     return x
 }
