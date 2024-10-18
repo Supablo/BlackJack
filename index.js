@@ -8,6 +8,7 @@ let bet;
 let cards = [];
 let cardsD = [];
 let hasBlackJack;
+let hasStanded;
 let messageEl = document.getElementById("message-el");
 let sumEl = document.getElementById("sum-el");
 let dSum = document.getElementById("dealer-sum");
@@ -41,9 +42,12 @@ function renderGame()
     for (let i = 0; i < cards.length; i++) cardsEl.innerText += " " + cards[i];
     for (let j = 0; j < cardsD.length; j++) dCards.innerText += " " + cardsD[j];
 
-    if (sum < 21) messageEl.innerText = "Do you want to draw a new card? 🙂";
-    else if (hasBlackJack) messageEl.innerText = "Wohoo! You've got Blackjack! 🥳";
-    else messageEl.innerText = "You're out of the game! 😭";
+    if (!hasStanded)
+    {
+        if (sum < 21) messageEl.innerText = "Do you want to draw a new card? 🙂";
+        else if (hasBlackJack) messageEl.innerText = "Wohoo! You've got Blackjack! 🥳";
+        else messageEl.innerText = "You're out of the game! 😭";
+    }
 
     localStorage.setItem("cards", JSON.stringify(cards));
     localStorage.setItem("sum", sum);
@@ -65,6 +69,7 @@ function newCardD()
 
 function stand()
 {
+    hasStanded = true
     while (sumD < 17) newCardD()
     
     if (sumD > 21)
